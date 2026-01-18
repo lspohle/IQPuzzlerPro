@@ -15,19 +15,24 @@ import org.puzzler.solver.Solver;
  */
 public class Main {
     public static void main(String[] args) {
-        Timer timer = new Timer();
-        timer.start();
+        if (args.length > 0) {
+            Timer timer = new Timer();
+            timer.start();
 
-        Board board = new Board();
-        Level level = LevelLoader.load(7);
-        Solver solver  = new Backtracking();
+            Board board = new Board();
+            Level level = LevelLoader.load(Integer.parseInt(args[0]));
+            Solver solver  = new Backtracking();
 
-        List<Piece> pieces = level.initBoard(board);
-        board.printBoard();
-        solver.solve(board, level.remainingPieces(pieces));
-        board.printBoard();
+            List<Piece> pieces = level.initBoard(board);
+            board.printBoard();
+            solver.solve(board, level.remainingPieces(pieces));
+            board.printBoard();
 
-        timer.end();
-        timer.printAllDurations();
+            timer.end();
+            timer.printAllDurations();
+        } else {
+            System.out.println("No level specified.");
+        }
+
     }
 }
