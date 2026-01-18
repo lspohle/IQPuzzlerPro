@@ -12,7 +12,6 @@ package org.puzzler.model;
  */
 public class Timer {
     private long start;
-    private long end;
 
     private long duration;
 
@@ -33,8 +32,8 @@ public class Timer {
      * <p>If {@link #start()} was not called before this method, this method is a no-op.</p>
      */
     public void end() {
-        this.end = System.nanoTime();
-        this.duration = this.end - this.start;
+        long end = System.nanoTime();
+        this.duration = end - this.start;
     }
 
     /**
@@ -44,7 +43,6 @@ public class Timer {
      * are recorded, the method indicates that no timing information is available.</p>
      */
     public void printAllDurations() {
-        System.out.println();
         System.out.println("Benötigte Dauer: " + this.getDurationInNs() + " ns.");
         System.out.println("Benötigte Dauer: " + this.getDurationInMs() + " ms.");
         System.out.println("Benötigte Dauer: " + this.getDurationInS() + " s.");

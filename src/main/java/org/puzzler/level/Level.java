@@ -1,7 +1,10 @@
 package org.puzzler.level;
 
 import org.puzzler.model.Board;
+import org.puzzler.model.Color;
 import org.puzzler.model.Piece;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,13 +33,35 @@ public interface Level {
      *
      * Implementations typically compute which colors are not present among the already
      * placed pieces, instantiate new {@link Piece} objects for them, initialize their
-     * block shapes (e.g. by calling {@link #initBlock(Piece)} or {@code Level.super.initBlock(piece)}),
-     * and return that list.
+     * block shapes, and return that list.
      *
-     * @param pieces the list of already placed pieces
+     * @param placedPieces the list of already placed pieces
      * @return list of pieces that remain to be placed
      */
-    List<Piece> remainingPieces(List<Piece> pieces);
+    default List<Piece> remainingPieces(List<Piece> placedPieces) {
+        List<Piece> remainingPieces = new ArrayList<>();
+
+        System.out.println("The following blocks are unset:");
+
+        for (Color color : Color.values()) {
+            boolean isRemaining = true;
+
+            for (Piece piece : placedPieces) {
+                if (piece.getColor() == color) {
+                    isRemaining = false;
+                    break;
+                }
+            }
+
+            if (isRemaining) {
+                Piece piece = new Piece(color);
+                initBlock(piece);
+                remainingPieces.add(piece);
+                System.out.println(color);
+            }
+        }
+        return remainingPieces;
+    }
 
     /**
      * Return a human-readable name for this level.
@@ -167,255 +192,4 @@ public interface Level {
                 //default -> throw new IllegalArgumentException("Unsupported color: " + piece.getColor());;
         }
     }
-
-
-    /*// Level 40
-    private void initBlock(Color color) {
-        switch (color) {
-            case YELLOW:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {2, 0},
-                        {3, 0},
-                        {1, 1}});
-*//*                this.addPoints(new int[][] {
-                        {2, 2},
-                        {2, 3},
-                        {2, 4},
-                        {2, 5},
-                        {3, 4}});*//*
-                break;
-            case LIGTH_RED:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {2, 0},
-                        {3, 0},
-                        {0, 1}});
-                break;
-            case PINK:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 1},
-                        {1, 0},
-                        {2, 0},
-                        {3, 0},
-                        {1, 1}});
-                break;
-            case LIGHT_BLUE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {0, 1}});
-                break;
-            case DARK_MINT:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {0, 2},
-                        {1, 1}});
-                break;
-            case PURPLE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 1},
-                        {1, 2},
-                        {2, 2}});
-                break;
-            case ORANGE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 1},
-                        {1, 2},
-                        {2, 1}});
-                break;
-            case DARK_BLUE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 0},
-                        {2, 0}});
-                break;
-            case GREEN:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {1, 1},
-                        {1, 2},
-                        {0, 2}});
-                break;
-            case DARK_RED:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 1},
-                        {1, 2}});
-                break;
-            case LIGHT_MINT:
-                // Initial Coordinates
-                *//*this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 0},
-                        {1, 1},
-                        {2, 0}});*//*
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {0, 2},
-                        {1, 0},
-                        {1, 1}});
-                break;
-            case BLUE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {0, 2},
-                        {1, 0},
-                        {2, 0}});
-                break;
-            default:
-                System.out.println("Error");
-        }
-    }*/
-
-    /*// Level 33
-    private void initBlock(Color color) {
-        switch (color) {
-            case YELLOW:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {2, 0},
-                        {3, 0},
-                        {1, 1}});
-                break;
-            case LIGTH_RED:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {2, 0},
-                        {3, 0},
-                        {0, 1}});
-                break;
-            case PINK:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 1},
-                        {1, 0},
-                        {2, 0},
-                        {3, 0},
-                        {1, 1}});
-                break;
-            case LIGHT_BLUE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {0, 1}});
-                break;
-            case DARK_MINT:
-                // Initial Coordinates
-               this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {0, 2},
-                        {1, 1}});
-                break;
-            case PURPLE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 1},
-                        {1, 2},
-                        {2, 2}});
-                break;
-            case ORANGE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 1},
-                        {1, 2},
-                        {2, 1}});
-                break;
-            case DARK_BLUE:
-                // Initial Coordinates
-                *//*this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 0},
-                        {2, 0}});*//*
-                this.addPoints(new int[][] {
-                        {2, 5},
-                        {2, 6},
-                        {2, 7},
-                        {3, 7}});
-                break;
-            case GREEN:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {1, 0},
-                        {1, 1},
-                        {1, 2},
-                        {0, 2}});
-                break;
-            case DARK_RED:
-                // Initial Coordinates
-                *//*this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 1},
-                        {1, 2}});*//*
-                this.addPoints(new int[][] {
-                        {0, 3},
-                        {1, 3},
-                        {1, 4},
-                        {2, 4}});
-                break;
-            case LIGHT_MINT:
-                // Initial Coordinates
-                *//*this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {1, 0},
-                        {1, 1},
-                        {2, 0}});*//*
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {0, 2},
-                        {1, 0},
-                        {1, 1}});
-                break;
-            case BLUE:
-                // Initial Coordinates
-                this.addPoints(new int[][] {
-                        {0, 0},
-                        {0, 1},
-                        {0, 2},
-                        {1, 0},
-                        {2, 0}});
-                break;
-            default:
-                System.out.println("Error");
-        }
-    }*/
 }

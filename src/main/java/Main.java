@@ -23,6 +23,7 @@ public class Main {
         Solver solver  = new Backtracking();
 
         List<Piece> pieces = level.initBoard(board);
+        board.printBoard();
         solver.solve(board, level.remainingPieces(pieces));
         board.printBoard();
 

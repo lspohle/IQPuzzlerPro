@@ -36,6 +36,11 @@ public class Piece {
         this.block = block;
     }
 
+    public Piece(Color color, int[][] coordinates) {
+        this.color = color;
+        addPoints(coordinates);
+    }
+
     /**
      * Construct a piece with only a color. Coordinate points must be added later
      * with {@link #addPoints(int[][])} or via a level initializer.
@@ -148,11 +153,9 @@ public class Piece {
      * Rotate the provided block 90 degrees clockwise in-place.
      *
      * @param block list of points to rotate
-     * @return rotated block (same list instance)
      */
-    private List<Point> rotate(List<Point> block) {
+    private void rotate(List<Point> block) {
         block.forEach(point -> point.setLocation(rotatePoint(point)));
-        return block;
     }
 
     /**
