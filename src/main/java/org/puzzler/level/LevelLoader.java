@@ -22,7 +22,7 @@ public class LevelLoader {
      */
     public static Level load(int levelNumber) {
         return switch (levelNumber) {
-            case 7 -> new Level7();
+            //case 7 -> new Level7();
             case 8 -> new Level8();
             case 26 -> new Level26();
             case 33 -> new Level33();
